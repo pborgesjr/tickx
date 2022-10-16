@@ -1,8 +1,39 @@
-import { boardRows } from "const";
+import { boardRows, boardCols } from "const";
 import { useRecoilState } from "recoil";
 import { boardState, gameOverState, playerState } from "state";
+import { Player } from "types";
 
 const testWin = (arr: number[]): boolean => /1{4}|2{4}/.test(arr.join(""));
+
+const testWinDiagonally = (
+  colPosition: number,
+  rowPosition: number,
+  board: Player[][]
+) => {
+  // Decreasing column position and row position
+  if (colPosition - 3 >= 0 && rowPosition - 3 >= 0) {
+    const diagonalArray = [
+      board[colPosition][rowPosition],
+      board[colPosition - 1][rowPosition - 1],
+      board[colPosition - 2][rowPosition - 2],
+      board[colPosition - 3][rowPosition - 3],
+    ];
+
+    return testWin(diagonalArray);
+  }
+
+  // Increasing column position and decreasing row position
+  if (colPosition + 3 < boardCols && rowPosition - 3 >= 0) {
+    const diagonalArray = [
+      board[colPosition][rowPosition],
+      board[colPosition + 1][rowPosition - 1],
+      board[colPosition + 2][rowPosition - 2],
+      board[colPosition + 3][rowPosition - 3],
+    ];
+
+    return testWin(diagonalArray);
+  }
+};
 
 const usePlayPiece = () => {
   const [board, setBoard] = useRecoilState(boardState);
@@ -26,11 +57,10 @@ const usePlayPiece = () => {
     );
 
     const row = newBoard[col].length - 1;
-
     if (
       testWin(newBoard[col]) || // Did win vertically
-      testWin(newBoard.map((col) => col[row] || 0)) // Did win horizontally
-      // TODO: Did win diagonally
+      testWin(newBoard.map((col) => col[row] || 0)) || // Did win horizontally
+      testWinDiagonally(col, row, newBoard) // Did win diagonally
     ) {
       setGameOver(true);
     } else {
