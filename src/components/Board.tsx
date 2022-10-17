@@ -1,10 +1,11 @@
-import { Circle, Flex, useMediaQuery } from "@chakra-ui/react";
+import { Flex, useMediaQuery } from "@chakra-ui/react";
 import { boardRows, playerColor } from "const";
 import { usePlayPiece } from "hooks";
 import { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { boardState, gameOverState, playerState } from "state";
 import { Player } from "types";
+import { Circle } from "./Circle";
 
 const padCol = (col: number[]): number[] =>
   col.join("").padEnd(boardRows, "0").split("").map(Number);
