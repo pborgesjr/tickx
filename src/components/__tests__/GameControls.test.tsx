@@ -1,6 +1,6 @@
 import { render, fireEvent, screen } from "@testing-library/react";
 import { MutableSnapshot, RecoilRoot } from "recoil";
-import GameControls from "components/GameControls";
+import { GameControls } from "components/GameControls";
 import React from "react";
 import { boardState } from "state";
 

@@ -1,4 +1,4 @@
-import { Circle, Flex } from "@chakra-ui/react";
+import { Circle, Flex, useMediaQuery } from "@chakra-ui/react";
 import { boardRows, playerColor } from "const";
 import { usePlayPiece } from "hooks";
 import { FC } from "react";
@@ -9,11 +9,13 @@ import { Player } from "types";
 const padCol = (col: number[]): number[] =>
   col.join("").padEnd(boardRows, "0").split("").map(Number);
 
-const Board: FC = () => {
+export const Board: FC = () => {
   const play = usePlayPiece();
   const board = useRecoilValue(boardState);
   const player = useRecoilValue(playerState);
   const gameOver = useRecoilValue(gameOverState);
+
+  const [isPortraitMode] = useMediaQuery("(max-height: 490px)");
 
   return (
     <Flex justify="center">
@@ -28,7 +30,11 @@ const Board: FC = () => {
           {padCol(col).map((p, j) => (
             <Circle
               m={1}
-              size="40px"
+              size={
+                isPortraitMode
+                  ? "40px"
+                  : ["40px", "50px", "70px", "80px", "100px"]
+              }
               key={`${i}-${j}`}
               boxShadow="inner"
               bg={playerColor[p as Player] || "gray.300"}
@@ -36,7 +42,11 @@ const Board: FC = () => {
           ))}
           <Circle
             m={1}
-            size="40px"
+            size={
+              isPortraitMode
+                ? "40px"
+                : ["40px", "50px", "70px", "80px", "100px"]
+            }
             boxShadow="base"
             visibility="hidden"
             bg={playerColor[player]}
@@ -49,5 +59,3 @@ const Board: FC = () => {
     </Flex>
   );
 };
-
-export default Board;

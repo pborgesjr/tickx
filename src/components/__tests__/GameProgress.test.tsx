@@ -1,7 +1,7 @@
 import React from "react";
 import { MutableSnapshot, RecoilRoot } from "recoil";
 import { render, screen } from "@testing-library/react";
-import GameProgress from "components/GameProgress";
+import { GameProgress } from "components/GameProgress";
 import { gameOverState } from "state";
 
 describe("Testing GameProgress component", () => {

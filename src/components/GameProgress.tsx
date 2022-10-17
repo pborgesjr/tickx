@@ -4,7 +4,7 @@ import { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { gameOverState, playerState } from "state";
 
-const GameProgress: FC = () => {
+export const GameProgress: FC = () => {
   const player = useRecoilValue(playerState);
   const gameOver = useRecoilValue(gameOverState);
   const name = playerName[player];
@@ -15,5 +15,3 @@ const GameProgress: FC = () => {
     </Heading>
   );
 };
-
-export default GameProgress;

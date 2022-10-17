@@ -4,6 +4,10 @@ import { RecoilRoot, useRecoilValue } from "recoil";
 import { boardState, gameOverState, playerState } from "state";
 import { Board, Player } from "types";
 
+beforeEach(() => {
+  window.localStorage.clear();
+});
+
 const render = () => {
   const { result } = renderHook(
     () => ({
